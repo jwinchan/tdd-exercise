@@ -6,6 +6,10 @@ def blackjack_score(hand)
   score = 0
   aces = false
   hand.each do |card|
+    unless VALID_CARDS.include?(card)
+      raise ArgumentError
+    end
+
     case card
     when 'Jack', 'Queen', 'King'
       score += 10
@@ -19,10 +23,16 @@ def blackjack_score(hand)
       score += card
     end
   end
+
   if aces && score <= 10
     score += 11
   elsif aces && score > 10
     score += 1
   end
+
+  unless score < 22
+    raise ArgumentError
+  end
+
   return score
 end
